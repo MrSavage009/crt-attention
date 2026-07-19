@@ -40,7 +40,7 @@ d_5 = (5/12) · d_model   →  categorical patterns (scale = 1/√5)
 
 Each subspace has **learned** Q/K/V projections to its modulus rank. The CRT head outputs a 12-dimensional concatenation $[\mathbf{o}_4 \mid \mathbf{o}_3 \mid \mathbf{o}_5]$.
 
-### 2.2 The Hybrid Architecture
+### 2.2.1 The Hybrid Architecture
 
 Pure CRT attention bottlenecks at 12 dimensions — too restrictive for complex tasks. We **heal** this by appending a standard head:
 
@@ -55,6 +55,16 @@ Pure CRT attention bottlenecks at 12 dimensions — too restrictive for complex 
 The CRT head provides **structure-aligned efficiency**. The standard head provides **flexibility**. The output projection fuses both.
 
 ---
+
+
+
+### 2.2.2 The Hybrid Architecture
+
+Pure CRT attention bottlenecks at 12 dimensions — too restrictive for complex tasks. We **heal** this by appending a standard head:
+
+![From Bottleneck to Hybrid: The Healing Architecture](1.png)
+
+*Figure 1: Pure CRT (left) suffers a 12-dimensional bottleneck that cripples representational capacity. The hybrid (right) fuses CRT subspaces with a standard head, preserving structure-aligned efficiency while recovering full flexibility. Result: +20.8pp accuracy with 30% fewer parameters.*
 
 ## 3. Empirical Results
 
@@ -112,6 +122,17 @@ The CRT head provides **structure-aligned efficiency**. The standard head provid
 **Insight.** The structured prior requires sufficient optimization steps to learn useful projections. With limited data, flexibility dominates — the standard head's extra capacity allows faster overfitting. This establishes a **boundary condition**: the hybrid wins in the sufficiently-data regime; standard wins in the scarce-data regime.
 
 ---
+
+### 3.5 The Inductive Bias Activation Threshold
+
+The boundary between Tests 3 and 4 is not arbitrary — it reveals a **phase transition** in how models exploit structure:
+
+![Data-Regime Phase Transition](2.png)
+
+*Figure 2: The hybrid's structured prior requires sufficient data to activate. Below ~1,500 training samples, standard attention's flexibility dominates. Above the threshold, the hybrid's aligned inductive bias drives a steep accuracy rise. This "inductive bias activation threshold" is a predictable property of structure-matched architectures.*
+
+---
+
 
 ## 4. Scaling Exactness
 
