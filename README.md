@@ -1,8 +1,3 @@
-  
-    The string had an unclosed quote. Let me fix it and rewrite properly.      
-  Here's the polished, GitHub-optimized paper with deliberate high-impact writing and clean structure:
-
----
 
 # CRT Attention: Structured Decomposition for Parameter-Efficient Multi-Head Attention
 
